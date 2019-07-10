@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
 import { BarChart } from "react-d3-components";
-import { getRandomData } from "../utilities/randomData";
+import { getCPU } from "../utilities/randomData";
 
 class HistoricData extends Component {
   state = { selectedDuration: "15-mins" };
@@ -12,7 +12,7 @@ class HistoricData extends Component {
 
   render() {
     const { selectedDuration } = this.state;
-    const data = getRandomData(selectedDuration);
+    const data = getCPU(selectedDuration);
 
     return (
       <Container>
