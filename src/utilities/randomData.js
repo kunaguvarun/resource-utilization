@@ -2,6 +2,11 @@ import moment from "moment";
 moment().format();
 
 export const getRandomData = duration => {
+  let endDate = new Date();
+  let startDate = moment(endDate)
+    .subtract(15, "minutes")
+    .toDate();
+
   const data = [
     {
       label: "somethingA",
