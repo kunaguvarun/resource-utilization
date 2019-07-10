@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
-import { BarChart } from "react-d3-components";
+import { LineChart } from "react-d3-components";
 import { getCPU } from "../utilities/randomData";
 
 class HistoricData extends Component {
@@ -17,10 +17,10 @@ class HistoricData extends Component {
     return (
       <Container>
         <Row>
-          <Col sm="3">
+          <Col>
             <h2>Historic Data</h2>
           </Col>
-          <Col sm="2" style={{ marginTop: 10 }}>
+          <Col style={{ marginTop: 10 }}>
             <select
               value={selectedDuration}
               onChange={this.handleDurationChange}
@@ -35,16 +35,12 @@ class HistoricData extends Component {
           </Col>
         </Row>
         <Row>
-          <Col>
-            <div>
-              <BarChart
-                data={data}
-                width={400}
-                height={400}
-                margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
-              />
-            </div>
-          </Col>
+          <LineChart
+            data={data}
+            width={1200}
+            height={400}
+            margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
+          />
         </Row>
       </Container>
     );

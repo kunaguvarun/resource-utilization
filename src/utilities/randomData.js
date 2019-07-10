@@ -15,7 +15,11 @@ while (moment(now).get("date") === moment(startDate).get("date")) {
   servers.forEach(s => {
     stats.push({
       server: s,
-      cpu: Math.floor(Math.random() * 100) + 1 + "%",
+      cpu:
+        moment(now).get("hour") > 20 && moment(now).get("hour") < 22
+          ? Math.floor(Math.random() * (100 - 80) + 1) + 80
+          : Math.floor(Math.random() * (10 - 1) + 1) + 1,
+
       memory: Math.floor(Math.random() * 100) + 1 + "%",
       cDrive: Math.floor(Math.random() * 100) + 1 + "%",
       dDrive: Math.floor(Math.random() * 100) + 1 + "%",
