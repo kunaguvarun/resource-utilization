@@ -1,5 +1,17 @@
 import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
+import { BarChart } from "react-d3-components";
+
+const data = [
+  {
+    label: "somethingA",
+    values: [
+      { x: "SomethingA", y: 10 },
+      { x: "SomethingB", y: 4 },
+      { x: "SomethingC", y: 3 }
+    ]
+  }
+];
 
 class HistoricData extends Component {
   render() {
@@ -16,6 +28,18 @@ class HistoricData extends Component {
               <option name="today">Today</option>
               <option name="past">Past</option>
             </select>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div>
+              <BarChart
+                data={data}
+                width={400}
+                height={400}
+                margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
+              />
+            </div>
           </Col>
         </Row>
       </Container>
