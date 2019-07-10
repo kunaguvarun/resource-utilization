@@ -33,6 +33,7 @@ class HistoricData extends Component {
         <Row>
           <Col>
             <div>
+              <p>CPU Usage</p>
               <BarChart
                 data={data}
                 width={400}
