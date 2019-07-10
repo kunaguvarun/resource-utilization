@@ -28,11 +28,32 @@ while (moment(now).get("date") === moment(startDate).get("date")) {
   });
 }
 
-export const getCPU = () => {
+export const getCPU = duration => {
+  let filteredStats = [];
+
+  switch (duration) {
+    case "15-mins":
+      filteredStats = stats.filter(s =>
+        moment(s.timestamp).isBetween(
+          moment().subtract(15, "minutes"),
+          moment()
+        )
+      );
+      break;
+
+    case "hour":
+      filteredStats = stats.filter(s =>
+        moment(s.timestamp).isBetween(moment().subtract(1, "hour"), moment())
+      );
+      break;
+    default:
+      filteredStats = stats;
+  }
+
   const data = [
     {
-      label: "CPU",
-      values: stats
+      label: "WACSRIB00001019",
+      values: filteredStats
         .filter(s => s.server === "WACSRIB00001019")
         .map(obj => ({ x: obj.timestamp, y: obj.cpu }))
     }
