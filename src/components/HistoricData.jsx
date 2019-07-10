@@ -4,7 +4,7 @@ import { LineChart } from "react-d3-components";
 import { getCPU } from "../utilities/randomData";
 
 class HistoricData extends Component {
-  state = { selectedDuration: "15-mins" };
+  state = { selectedDuration: "hour" };
 
   handleDurationChange = event => {
     this.setState({ selectedDuration: event.target.value });
@@ -25,10 +25,10 @@ class HistoricData extends Component {
               value={selectedDuration}
               onChange={this.handleDurationChange}
             >
-              <option selected value="15-mins">
-                15 mins
+              <option value="15-mins">15 mins</option>
+              <option selected value="hour">
+                1 hour
               </option>
-              <option value="hour">1 hour</option>
               <option value="today">Today</option>
               <option value="past">Past</option>
             </select>

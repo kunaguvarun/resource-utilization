@@ -46,8 +46,11 @@ export const getCPU = duration => {
         moment(s.timestamp).isBetween(moment().subtract(1, "hour"), moment())
       );
       break;
-    default:
-      filteredStats = stats;
+
+    case "today":
+      filteredStats = stats.filter(s =>
+        moment(s.timestamp).isBetween(moment().format("L"), moment())
+      );
   }
 
   const data = [
