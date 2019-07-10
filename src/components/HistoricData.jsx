@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
 import { BarChart } from "react-d3-components";
-
-const data = [
-  {
-    label: "somethingA",
-    values: [
-      { x: "SomethingA", y: 10 },
-      { x: "SomethingB", y: 4 },
-      { x: "SomethingC", y: 3 }
-    ]
-  }
-];
+import { getRandomData } from "../utilities/randomData";
 
 class HistoricData extends Component {
+  state = { selectedDuration: "15-mins" };
+
+  handleDurationChange = event => {
+    this.setState({ selectedDuration: event.target.value });
+  };
+
   render() {
+    const { selectedDuration } = this.state;
+    const data = getRandomData(selectedDuration);
+
     return (
       <Container>
         <Row>
@@ -22,11 +21,16 @@ class HistoricData extends Component {
             <h2>Historic Data</h2>
           </Col>
           <Col sm="2" style={{ marginTop: 10 }}>
-            <select>
-              <option name="15-mins">15 mins</option>
-              <option name="hour">1 hour</option>
-              <option name="today">Today</option>
-              <option name="past">Past</option>
+            <select
+              value={selectedDuration}
+              onChange={this.handleDurationChange}
+            >
+              <option selected value="15-mins">
+                15 mins
+              </option>
+              <option value="hour">1 hour</option>
+              <option value="today">Today</option>
+              <option value="past">Past</option>
             </select>
           </Col>
         </Row>
