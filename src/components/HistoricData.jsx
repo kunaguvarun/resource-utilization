@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
 import { LineChart } from "react-d3-components";
-import { getCPU } from "../utilities/randomData";
+import { getCPU, getMemory } from "../utilities/randomData";
 
 class HistoricData extends Component {
   state = { selectedDuration: "hour" };
@@ -12,7 +12,8 @@ class HistoricData extends Component {
 
   render() {
     const { selectedDuration } = this.state;
-    const data = getCPU(selectedDuration);
+    const cpuStats = getCPU(selectedDuration);
+    const memoryStats = getMemory(selectedDuration);
 
     return (
       <Container>
@@ -35,8 +36,16 @@ class HistoricData extends Component {
           </Col>
         </Row>
         <Row>
+          <h3>CPU Usage</h3>
           <LineChart
-            data={data}
+            data={cpuStats}
+            width={1200}
+            height={400}
+            margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
+          />
+          <h3>Memory Usage</h3>
+          <LineChart
+            data={memoryStats}
             width={1200}
             height={400}
             margin={{ top: 10, bottom: 50, left: 50, right: 10 }}

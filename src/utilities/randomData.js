@@ -22,9 +22,21 @@ const generateStatsFor = date => {
             ? Math.floor(Math.random() * (100 - 80) + 1) + 80
             : Math.floor(Math.random() * (10 - 1) + 1) + 1,
 
-        memory: Math.floor(Math.random() * 100) + 1 + "%",
-        cDrive: Math.floor(Math.random() * 100) + 1 + "%",
-        dDrive: Math.floor(Math.random() * 100) + 1 + "%",
+        memory:
+          (hour > 16 && hour < 18) || (hour > 8 && hour < 10)
+            ? Math.floor(Math.random() * (100 - 80) + 1) + 80
+            : Math.floor(Math.random() * (10 - 1) + 1) + 1,
+
+        cDrive:
+          (hour > 11 && hour < 14) || (hour > 4 && hour < 6)
+            ? Math.floor(Math.random() * (100 - 80) + 1) + 80
+            : Math.floor(Math.random() * (10 - 1) + 1) + 1,
+
+        dDrive:
+          (hour > 21 && hour < 23) || (hour > 4 && hour < 6)
+            ? Math.floor(Math.random() * (100 - 80) + 1) + 80
+            : Math.floor(Math.random() * (10 - 1) + 1) + 1,
+
         timestamp: now
       });
     });
@@ -40,7 +52,7 @@ stats.concat(
 
 stats.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
 
-export const getCPU = duration => {
+const filterStats = duration => {
   let filteredStats = [];
 
   switch (duration) {
@@ -70,6 +82,11 @@ export const getCPU = duration => {
         moment(s.timestamp).isBefore(moment().format("L"))
       );
   }
+  return filteredStats;
+};
+
+export const getCPU = duration => {
+  let filteredStats = filterStats(duration);
 
   const data = [
     {
@@ -79,6 +96,19 @@ export const getCPU = duration => {
         .map(obj => ({ x: obj.timestamp, y: obj.cpu }))
     }
   ];
-  console.log(data);
+  return data;
+};
+
+export const getMemory = duration => {
+  let filteredStats = filterStats(duration);
+
+  const data = [
+    {
+      label: "WACSRIB00001019",
+      values: filteredStats
+        .filter(s => s.server === "WACSRIB00001019")
+        .map(obj => ({ x: obj.timestamp, y: obj.memory }))
+    }
+  ];
   return data;
 };
