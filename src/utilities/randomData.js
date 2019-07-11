@@ -12,12 +12,13 @@ const generateStatsFor = date => {
     now = moment(now)
       .add(5, "m")
       .toDate();
+    let hour = moment(now).get("hour");
 
     servers.forEach(s => {
       stats.push({
         server: s,
         cpu:
-          moment(now).get("hour") > 20 && moment(now).get("hour") < 22
+          (hour > 20 && hour < 22) || (hour > 4 && hour < 6)
             ? Math.floor(Math.random() * (100 - 80) + 1) + 80
             : Math.floor(Math.random() * (10 - 1) + 1) + 1,
 
@@ -31,7 +32,13 @@ const generateStatsFor = date => {
   return stats;
 };
 
-stats.concat(generateStatsFor("2019-07-10"), generateStatsFor("2019-07-09"));
+stats.concat(
+  generateStatsFor(moment().format("L")),
+  generateStatsFor(moment().subtract(1, "day")),
+  generateStatsFor(moment().subtract(2, "days"))
+);
+
+stats.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
 
 export const getCPU = duration => {
   let filteredStats = [];
@@ -59,7 +66,9 @@ export const getCPU = duration => {
       break;
 
     default:
-      filteredStats = stats.filter(s => moment(s.timestamp).isBefore(moment()));
+      filteredStats = stats.filter(s =>
+        moment(s.timestamp).isBefore(moment().format("L"))
+      );
   }
 
   const data = [
@@ -70,5 +79,6 @@ export const getCPU = duration => {
         .map(obj => ({ x: obj.timestamp, y: obj.cpu }))
     }
   ];
+  console.log(data);
   return data;
 };
